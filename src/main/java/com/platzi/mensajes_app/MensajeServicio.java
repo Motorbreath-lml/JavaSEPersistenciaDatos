@@ -27,12 +27,15 @@ public class MensajeServicio {
     }
     
     public static void listarMensaje(){
-        MensajeDAO.leerMensajesBD();
-        
+        MensajeDAO.leerMensajesBD();        
     }
     
     public static void borrarMensaje(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Escribe el id del mensaje");
+        String id = sc.nextLine();
         
+        MensajeDAO.borrarMensajeBD(Integer.parseInt(id));  
     }
     
     public static void editarMensaje(){
