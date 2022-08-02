@@ -32,14 +32,25 @@ public class MensajeServicio {
     
     public static void borrarMensaje(){
         Scanner sc = new Scanner(System.in);
-        System.out.println("Escribe el id del mensaje");
+        System.out.println("Escribe el id del mensaje que va ser borrado");
         String id = sc.nextLine();
         
         MensajeDAO.borrarMensajeBD(Integer.parseInt(id));  
     }
     
     public static void editarMensaje(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Escribe el id del mensaje a actualizar");
+        int id = Integer.parseInt(sc.nextLine());
         
+        System.out.println("Escribe el contenido del mensaje a actualizar");
+        String mensaje=sc.nextLine();
+        
+        Mensaje registro=new Mensaje();
+        registro.setIdMensaje(id);
+        registro.setMensaje(mensaje);
+        
+        MensajeDAO.actualizarMensajeBD(registro);
     }
         
 }
