@@ -10,6 +10,7 @@ package com.platzi.mensajes_app;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  *
@@ -39,11 +40,35 @@ public class MensajeDAO {
             }
         } catch (Exception ex) {
             System.out.println("No se obtuvo una conexion a la base de datos\n" + ex);
-        }
-        
+        }        
     }
     
-    public static void leerMensajesBD(){    
+    public static void leerMensajesBD(){
+        ConexionDB db_connect = new ConexionDB();
+        
+        PreparedStatement ps=null;
+        //El resultSet es el resultado de la seleccion nos proporsiona una forma de extraer los elementos del mismo
+        ResultSet rs=null;
+        
+        try(Connection conexion = db_connect.getConnection())  {       
+            //creacion del select y obtencion del resultset
+            String query="SELECT * FROM mensajes";
+            ps=conexion.prepareStatement(query);
+            rs=ps.executeQuery();
+            
+            //Recorrer el ResultSet mientras tenga datos
+            while(rs.next()){
+                //Del ResultSet se obtienen lo datos de la colimnas y tipo de dato
+                //En la tabla un ID se declaro como int, entonces por eso se obtine un int, cuyo nombre de columna es "id_mensaje"
+                System.out.println("ID: "+rs.getInt("id_mensaje"));
+                System.out.println("Mensaje: "+rs.getString("mensaje"));
+                System.out.println("Autor: "+rs.getString("autor_mensaje"));
+                System.out.println("Fecha: "+rs.getString("fecha_mensaje"));
+                System.out.println("");
+            }
+        }catch(Exception e){
+            System.out.println("No se pudieron recuperar los mensajes:\n"+e);
+        }       
         
     }
     
